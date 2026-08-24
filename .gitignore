@@ -1,0 +1,6 @@
+data/
+share/
+.firebase/
+__pycache__/
+*.pyc
+.env
