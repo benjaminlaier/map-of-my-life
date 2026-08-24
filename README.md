@@ -1,8 +1,36 @@
 # Map of My Life
 
-A local-first photo map for exploring journeys with exact photo locations.
+A local-first photo map for exploring trips through geotagged photographs. The project imports photo metadata locally, displays it on an OpenStreetMap-based map, and can generate a static viewer for sharing.
 
-## Run the prototype
+## Features
+
+- EXIF GPS and Google Photos JSON sidecar import
+- Country, date, and map-viewport filtering
+- Local thumbnails and full-photo viewing
+- Capture location, time, and available camera metadata
+- Static trip export for Firebase Hosting
+
+## Requirements
+
+- Conda
+- Python 3.11
+- Node.js and Firebase CLI only for publishing
+
+Create the environment:
+
+```powershell
+conda env create -f environment.yml
+conda activate mapofmylife
+```
+
+For an existing environment:
+
+```powershell
+conda env update -n mapofmylife -f environment.yml
+conda activate mapofmylife
+```
+
+## Run locally
 
 ```powershell
 python server.py
@@ -10,69 +38,56 @@ python server.py
 
 Open http://localhost:8000.
 
-The first screen uses a small South America demo dataset. To create the Conda environment from scratch, run:
+## Import photos
+
+Use a Google Takeout folder or another folder containing supported image files. Keep Google Photos JSON sidecars next to their images when available.
 
 ```powershell
-conda env create -f environment.yml
-conda activate mapofmylife
+python importer.py "C:\path\to\your\photo-folder"
 ```
 
-If the environment already exists, update it with:
+The importer stores metadata and generated thumbnails in the ignored `data/` directory. Original images stay in their existing location.
 
-```powershell
-conda env update -n mapofmylife -f environment.yml
-```
+## Create a shareable export
 
-To import a Google Takeout folder, run:
-
-```powershell
-python importer.py "C:\path\to\Google Photos"
-python server.py
-```
-
-## Create a shareable trip
-
-After importing, create a self-contained static viewer:
+Generate a static viewer containing located photos, resized web images, thumbnails, and metadata:
 
 ```powershell
 python export_trip.py share
 ```
 
-Test the export locally:
+Test it locally:
 
 ```powershell
 python -m http.server 8001 --directory share
 ```
 
-Open http://localhost:8001. The `share/` folder contains the map, metadata, thumbnails, and web-sized originals. It is excluded from Git because it contains personal photos.
+Open http://localhost:8001.
 
-To publish it with Firebase Hosting, install Node.js and the Firebase CLI, then run from the project folder:
+The generated `share/` directory is ignored by Git because it contains personal photos.
+
+## Publish with Firebase Hosting
+
+Install Node.js and the Firebase CLI:
 
 ```powershell
 npm install -g firebase-tools
 firebase login
-firebase init hosting
 ```
 
-When Firebase asks for the public directory, enter `share` and choose the single-page app option if prompted. Then publish with:
+Initialize Hosting once, selecting `share` as the public directory. Choose **No** when asked to configure a single-page app, and do not overwrite the existing `share/index.html`.
 
 ```powershell
-firebase deploy
+firebase init hosting
+firebase deploy --only hosting
 ```
 
-Firebase will provide an unlisted `web.app` URL that can be shared with family. Anyone with that URL can view the export, so do not include photos that should remain private.
+Firebase prints the public `web.app` URL after deployment. Anyone who has the URL can view the exported photos, so only publish images intended for sharing.
 
-## Current scope
+## Privacy
 
-- Local SQLite metadata database
-- EXIF GPS and Google Photos JSON sidecar import
-- OpenStreetMap tiles through Leaflet
-- Country and date filtering
-- Local-first visual map with an image detail panel
+Photo data, generated exports, Firebase caches, and local Python files are excluded from Git. Review `git status` before pushing changes. The source repository contains the application code and configuration, not your personal photo library.
 
-Original photo files stay where they are; the importer stores their paths and metadata. Thumbnail generation and private share links are next milestones.
+## License
 
-For further updates
-python importer.py "C:\Users\Benjamin Laier\Pictures\MapTest"
-python export_trip.py share
-firebase deploy --only hosting
+No license has been selected yet. Add one before redistributing the project publicly.

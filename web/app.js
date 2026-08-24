@@ -52,7 +52,7 @@ function previousPhoto() { const index = state.visible.findIndex(photo => photo.
 function nextPhoto() { const index = state.visible.findIndex(photo => photo.id === state.currentPhotoId); if (index >= 0 && index < state.visible.length - 1) openPhoto(state.visible[index + 1].id); }
 function closePhoto() { $('photo-modal').hidden = true; $('modal-image').src = ''; }
 function render() {
-  $('photo-count').textContent = state.filtered.length; $('all-count').textContent = state.photos.length; $('country-count').textContent = countries(state.filtered).length; $('map-caption').textContent = state.filtered.length ? 'Showing your journey' : 'No locations selected'; renderMap();
+  $('photo-count').textContent = state.filtered.length; $('all-count').textContent = state.photos.length; $('country-count').textContent = countries(state.filtered).length; $('map-caption').textContent = state.filtered.length ? 'Photos' : 'No locations selected'; renderMap();
 }
 async function init() {
   state.map = L.map('map', { zoomControl: false, worldCopyJump: true }).setView([-25, -64], 4);

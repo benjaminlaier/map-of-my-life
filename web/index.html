@@ -19,16 +19,16 @@
     <aside class="sidebar">
       <div class="intro"><h1>Bizzies Trips</h1></div>
       <div class="stats"><div><strong id="photo-count">0</strong><span>located photos</span></div><div><strong id="country-count">0</strong><span>countries</span></div></div>
-      <section class="filters">
-        <div class="section-heading"><span>EXPLORE</span><button id="reset-filters">Reset</button></div>
+      <details class="filters" open>
+        <summary>Filters</summary>
+        <div class="filter-actions"><span>REFINE VIEW</span><button id="reset-filters">Reset</button></div>
         <label>Country<select id="country-filter"><option value="all">All countries</option></select></label>
         <label>From<input type="date" id="date-from"></label>
         <label>To<input type="date" id="date-to"></label>
-      </section>
-      <section class="collections"><div class="section-heading"><span>TRIPS</span><button id="new-collection">+ New</button></div><button class="collection active"><span class="collection-pin">◉</span><span>All trips</span><small id="all-count">0</small></button><button class="collection"><span class="collection-pin">◌</span><span>Current trip</span><small>active</small></button><button class="collection"><span class="collection-pin">◌</span><span>Unsorted</span><small>soon</small></button></section>
-      <div class="sidebar-footer"><p>Import your own library</p><p class="muted">Run <code>python importer.py &lt;folder&gt;</code> to begin.</p></div>
+      </details>
+      <div class="sidebar-footer"><p>Benjamin Laier</p><a href="https://github.com/benjaminlaier/map-of-my-life" target="_blank" rel="noreferrer">github.com/benjaminlaier/map-of-my-life</a></div>
     </aside>
-    <section class="map-shell"><div id="map"></div><div class="map-label"><span class="legend-dot"></span><span id="map-caption">Showing your journey</span></div><button class="locate-button" id="fit-map" aria-label="Fit all photos">⌖</button></section>
+    <section class="map-shell"><div id="map"></div><div class="map-label"><span class="legend-dot"></span><span id="map-caption">Photos</span></div><button class="locate-button" id="fit-map" aria-label="Fit all photos">⌖</button></section>
     <aside class="photo-panel"><div class="panel-header"><div><p class="eyebrow">MOMENTS</p><h2 id="result-title">All memories</h2></div><span class="result-count" id="result-count">0</span></div><div class="photo-list" id="photo-list"></div><div class="empty-state" id="empty-state" hidden><div>◌</div><p>No located photos match these filters.</p></div></aside>
   </main>
   <div class="photo-modal" id="photo-modal" hidden><div class="modal-backdrop" data-close-modal></div><section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="close-modal" aria-label="Close photo">×</button><button class="photo-nav previous-photo" id="previous-photo" type="button" aria-label="Previous photo" title="Previous photo"></button><img id="modal-image" src="" alt=""><button class="photo-nav next-photo" id="next-photo" type="button" aria-label="Next photo" title="Next photo"></button><div class="modal-meta"><p class="eyebrow">PHOTO DETAIL</p><h2 id="modal-title"></h2><p id="modal-place"></p><p id="modal-caption"></p><p class="modal-coordinates" id="modal-coordinates"></p><div class="modal-details" id="modal-details"></div></div></section></div>
