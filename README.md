@@ -90,4 +90,6 @@ Photo data, generated exports, Firebase caches, and local Python files are exclu
 
 ## License
 
-No license has been selected yet. Add one before redistributing the project publicly.
+This project is licensed under the [MIT License](LICENSE).
+
+The MIT License applies to this project's source code. External dependencies and services, including Leaflet, OpenStreetMap map data and tiles, Firebase Hosting, Google Fonts, and any images included in a personal export, remain subject to their own licenses and terms. Do not publish personal photos unless you have permission to share them.
