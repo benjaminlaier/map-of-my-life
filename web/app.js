@@ -27,7 +27,7 @@ function renderMap() {
   state.markers.forEach(marker => marker.remove()); state.markers = [];
   state.filtered.forEach(photo => {
     const marker = L.marker([photo.latitude, photo.longitude], { icon: markerIcon() }).addTo(state.map);
-    marker.bindPopup(`<img class="popup-image" src="${imageFor(photo)}" alt=""><strong>${photo.country}</strong><br><span>${formatDate(photo.date)}</span>`);
+    marker.bindPopup(`<button class="popup-photo-button" data-photo-id="${photo.id}" type="button" aria-label="Open photo"><img class="popup-image" src="${imageFor(photo)}" alt=""></button><div class="popup-location"><strong>${[photo.city, photo.region, photo.country].filter(Boolean).join(', ')}</strong><span>${formatDate(photo.date)}</span></div>`);
     marker.on('click', () => selectPhoto(photo.id)); state.markers.push(marker);
   });
   if (state.filtered.length) state.map.fitBounds(L.latLngBounds(state.filtered.map(photo => [photo.latitude, photo.longitude])), { padding: [60, 60], maxZoom: 5 });
@@ -52,7 +52,7 @@ function previousPhoto() { const index = state.visible.findIndex(photo => photo.
 function nextPhoto() { const index = state.visible.findIndex(photo => photo.id === state.currentPhotoId); if (index >= 0 && index < state.visible.length - 1) openPhoto(state.visible[index + 1].id); }
 function closePhoto() { $('photo-modal').hidden = true; $('modal-image').src = ''; }
 function render() {
-  $('photo-count').textContent = state.filtered.length; $('all-count').textContent = state.photos.length; $('country-count').textContent = countries(state.filtered).length; $('map-caption').textContent = state.filtered.length ? 'Photos' : 'No locations selected'; renderMap();
+  $('photo-count').textContent = state.filtered.length; $('country-count').textContent = countries(state.filtered).length; $('map-caption').textContent = state.filtered.length ? 'Photos' : 'No locations selected'; renderMap();
 }
 async function init() {
   state.map = L.map('map', { zoomControl: false, worldCopyJump: true }).setView([-25, -64], 4);
@@ -62,5 +62,5 @@ async function init() {
   try { const response = await fetch('/api/photos'); state.photos = (await response.json()).photos; } catch (error) { try { const response = await fetch('/photos.json'); state.photos = (await response.json()).photos; } catch (exportError) { showToast('Could not load photo data.'); } }
   renderFilters(); applyFilters(); if (state.photos.some(photo => photo.id.startsWith('demo-'))) showToast('Demo data is active. Import a folder to see your own photos.');
 }
-$('country-filter').addEventListener('change', applyFilters); $('date-from').addEventListener('change', applyFilters); $('date-to').addEventListener('change', applyFilters); $('reset-filters').addEventListener('click', () => { $('country-filter').value = 'all'; $('date-from').value = ''; $('date-to').value = ''; applyFilters(); }); $('fit-map').addEventListener('click', () => { if (state.filtered.length) state.map.fitBounds(L.latLngBounds(state.filtered.map(photo => [photo.latitude, photo.longitude])), { padding: [60, 60], maxZoom: 5 }); }); $('new-collection').addEventListener('click', () => showToast('Named collections arrive after the importer milestone.')); $('close-modal').addEventListener('click', closePhoto); $('previous-photo').addEventListener('click', previousPhoto); $('next-photo').addEventListener('click', nextPhoto); document.querySelector('[data-close-modal]').addEventListener('click', closePhoto); document.addEventListener('keydown', event => { if (event.key === 'Escape') closePhoto(); if (event.key === 'ArrowLeft' && !$('photo-modal').hidden) previousPhoto(); if (event.key === 'ArrowRight' && !$('photo-modal').hidden) nextPhoto(); });
+$('country-filter').addEventListener('change', applyFilters); $('date-from').addEventListener('change', applyFilters); $('date-to').addEventListener('change', applyFilters); $('reset-filters').addEventListener('click', () => { $('country-filter').value = 'all'; $('date-from').value = ''; $('date-to').value = ''; applyFilters(); }); $('fit-map').addEventListener('click', () => { if (state.filtered.length) state.map.fitBounds(L.latLngBounds(state.filtered.map(photo => [photo.latitude, photo.longitude])), { padding: [60, 60], maxZoom: 5 }); }); $('close-modal').addEventListener('click', closePhoto); $('previous-photo').addEventListener('click', previousPhoto); $('next-photo').addEventListener('click', nextPhoto); document.querySelector('[data-close-modal]').addEventListener('click', closePhoto); document.addEventListener('keydown', event => { if (event.key === 'Escape') closePhoto(); if (event.key === 'ArrowLeft' && !$('photo-modal').hidden) previousPhoto(); if (event.key === 'ArrowRight' && !$('photo-modal').hidden) nextPhoto(); }); document.addEventListener('click', event => { const button = event.target.closest('.popup-photo-button'); if (button) openPhoto(button.dataset.photoId); });
 init();
