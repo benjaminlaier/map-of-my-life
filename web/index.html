@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="/styles.css?v=4">
+  <link rel="stylesheet" href="/styles.css?v=5">
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">🌐</span><span>Map of My Life</span></div>
-    <div class="top-actions"><span class="status-dot"></span><span>Local library</span><button class="icon-button" aria-label="Settings">☼</button></div>
+    <div class="top-actions"><span class="status-dot"></span><span>Active</span><button class="icon-button" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">☼</button></div>
   </header>
   <main class="workspace">
     <aside class="sidebar">
@@ -33,6 +33,6 @@
   </main>
   <div class="photo-modal" id="photo-modal" hidden><div class="modal-backdrop" data-close-modal></div><section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="close-modal" aria-label="Close photo">×</button><button class="photo-nav previous-photo" id="previous-photo" type="button" aria-label="Previous photo" title="Previous photo"></button><img id="modal-image" src="" alt=""><button class="photo-nav next-photo" id="next-photo" type="button" aria-label="Next photo" title="Next photo"></button><div class="modal-meta"><p class="eyebrow">PHOTO DETAIL</p><h2 id="modal-title"></h2><p id="modal-place"></p><p id="modal-caption"></p><p class="modal-coordinates" id="modal-coordinates"></p><div class="modal-details" id="modal-details"></div></div></section></div>
   <div class="toast" id="toast">Demo data is active. Import a folder to see your own photos.</div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="/app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="/app.js?v=6"></script>
 </body>
 </html>

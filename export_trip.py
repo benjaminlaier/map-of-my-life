@@ -33,10 +33,11 @@ def export_trip(destination):
                 from PIL import Image, ImageOps
                 with Image.open(original) as image:
                     image = ImageOps.exif_transpose(image)
-                    image.thumbnail((2400, 2400))
-                    image.convert("RGB").save(images / f"{row[0]}.jpg", "JPEG", quality=84, optimize=True)
+                    image.thumbnail((1600, 1600))
+                    image.convert("RGB").save(images / f"{row[0]}.jpg", "JPEG", quality=76, optimize=True)
             except Exception:
-                shutil.copy2(original, images / f"{row[0]}.jpg")
+                if thumbnail.is_file():
+                    shutil.copy2(thumbnail, images / f"{row[0]}.jpg")
         photos.append(photo)
     (destination / "photos.json").write_text(json.dumps({"photos": photos}, ensure_ascii=True), encoding="utf-8")
     print(f"Exported {len(photos)} located photos to {destination.resolve()}")
